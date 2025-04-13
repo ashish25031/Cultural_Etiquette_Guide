@@ -1,4 +1,4 @@
-# Cultural Etiquette Guide
+# 
 
 A web-based guide to cultural etiquette around the world.
 
@@ -18,3 +18,4 @@ A web-based guide to cultural etiquette around the world.
 3. Click on map regions to view specific cultural etiquette
 
 No special dependencies required - just a web browser!
+Cultural Etiquette Guide

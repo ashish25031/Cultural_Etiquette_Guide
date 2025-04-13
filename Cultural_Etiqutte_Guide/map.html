@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>City Cultural Map</title>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGWBV43sy6Y-fczpQ9bDVFA9448D_HMX8" defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGWBV43sy6Y-fczpQ9bDVFA9448D_HMX8&callback=initMap" async defer></script>
     <script>
         let map;
 
@@ -14,32 +14,18 @@
             return params.get("city");
         }
 
-        // Initialize the map after DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            function initMap() {
-                const mapElement = document.getElementById("map");
-                if (!mapElement) {
-                    console.error("Map element not found");
-                    return;
-                }
-                
-                map = new google.maps.Map(mapElement, {
-                    center: { lat: 20, lng: 0 }, // Default center
-                    zoom: 2 // World map view
-                });
+        // Initialize the map
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 20, lng: 0 }, // Default center
+                zoom: 2 // World map view
+            });
 
-                const city = getCityFromQuery();
-                if (city) {
-                    showCityMap(city);
-                }
+            const city = getCityFromQuery();
+            if (city) {
+                showCityMap(city);
             }
-
-            // Load Google Maps API and initialize map
-            const script = document.createElement('script');
-            script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDGWBV43sy6Y-fczpQ9bDVFA9448D_HMX8&callback=initMap`;
-            script.defer = true;
-            document.head.appendChild(script);
-        });
+        }
 
         // Show the map for the specified city
         function showCityMap(city) {
@@ -55,16 +41,7 @@
                     map.setZoom(13); // Zoom in on the city
                     findCulturalSites(results[0].geometry.location);
                 } else {
-                document.getElementById("map").innerHTML = `
-                    <div style="text-align: center; padding: 50px;">
-                        <h3 style="color: #dc3545;">City not found</h3>
-                        <p>Please check the spelling or try another city.</p>
-                        <button onclick="window.location.href='index.html'" 
-                                style="margin-top: 20px; padding: 10px 20px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">
-                            Try Again
-                        </button>
-                    </div>
-                `;
+                    alert("City not found. Please check the spelling or try another city.");
                 }
             });
         }
